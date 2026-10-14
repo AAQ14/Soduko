@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SodukoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SodukoApplication.class, args);
+		Sudoku sudoku = new Sudoku();
+		sudoku.readFile("puzzle1.txt");
 	}
 
 }
