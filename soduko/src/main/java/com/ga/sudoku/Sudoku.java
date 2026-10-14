@@ -59,4 +59,20 @@ public class Sudoku {
             throw new RuntimeException(e);
         }
     }
+
+    public void printPuzzle(){
+        String line = "+-------+-------+-------+";
+        for(int row =0; row<BOARD_SIZE; row++){
+            if(row % BOX_SIZE == 0) System.out.println(line);
+            System.out.print("| ");
+
+            for (int col=0; col<BOARD_SIZE; col++){
+                System.out.print(board[row][col] + " ");
+                if((col + 1) % BOX_SIZE == 0)
+                    System.out.print("| ");
+            }
+            System.out.println();
+//            if((row +1) % BOX_SIZE==0 && row <BOARD_SIZE-1) System.out.println("+-------+-------+-------+");
+        }
+    }
 }

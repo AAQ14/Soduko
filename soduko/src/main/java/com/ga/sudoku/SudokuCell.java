@@ -31,7 +31,7 @@ public class SudokuCell {
 
     @Override
     public String toString() {
-        if(isEmpty()) return ".";
+        if(isEmpty()) return "0";
         return Integer.toString(getNumber());
     }
 }
