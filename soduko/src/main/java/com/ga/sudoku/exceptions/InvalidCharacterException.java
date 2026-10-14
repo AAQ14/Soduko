@@ -1,4 +1,4 @@
-package com.ga.soduko.exceptions;
+package com.ga.sudoku.exceptions;
 
 public class InvalidCharacterException extends RuntimeException {
     public InvalidCharacterException(String message) {
