@@ -9,6 +9,11 @@ public class SodukoApplication {
 	public static void main(String[] args) {
 		Sudoku sudoku = new Sudoku();
 		sudoku.readFile("puzzle1.txt");
+		SudokuSolver sudokuSolver = new SudokuSolver(sudoku);
+		if(sudokuSolver.solve()){
+			System.out.println("Solution: ");
+			sudoku.printPuzzle();
+		}
 		sudoku.printPuzzle();
 		System.out.println();
 		System.out.println(sudoku.isNumInRow(0,5));

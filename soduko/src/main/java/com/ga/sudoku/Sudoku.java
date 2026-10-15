@@ -102,7 +102,6 @@ public class Sudoku {
         int startCol = col - col % BOX_SIZE;
         for(int i =0; i< BOX_SIZE; i++){
             for(int n = 0; n <BOX_SIZE; n++){
-                System.out.print(board[startRow + i][startCol +n]);
                 if(board[startRow + i][startCol +n].getNumber() == num) return true;
             }
         }
@@ -110,6 +109,18 @@ public class Sudoku {
     }
 
     public boolean canPlace(int row, int col, int num){
-        return !(isNumInRow(row, num) && isNumInCol(col, num) && isNumInBox(row, col, num));
+        return !(isNumInRow(row, num) || isNumInCol(col, num) || isNumInBox(row, col, num));
+    }
+
+    public SudokuCell[][] getBoard(){
+        return board;
+    }
+
+    public void setCell(int row, int col, int num){
+        board[row][col].setNumber(num);
+    }
+
+    public SudokuCell  getCell(int row, int col){
+        return board[row][col];
     }
 }
