@@ -49,7 +49,7 @@ Validation rules for the upload:
 | Status | Meaning | Body |
 |---|---|---|
 | 200 OK | Puzzle solved | `Solved. Solution saved at: <path>` |
-| 400 Bad Request | Invalid upload or invalid puzzle content.
+| 400 Bad Request | Invalid upload or invalid puzzle content. | Exception message
 
 ## Running the project
 run `SodukoApplication` from your IDE. The server starts on `http://localhost:8080`.
