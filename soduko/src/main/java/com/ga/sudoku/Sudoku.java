@@ -2,7 +2,6 @@ package com.ga.sudoku;
 
 import com.ga.sudoku.exceptions.InvalidCharacterException;
 import com.ga.sudoku.exceptions.SudokuFileNotFoundException;
-import org.springframework.security.core.parameters.P;
 
 import java.io.*;
 import java.util.Arrays;
@@ -16,49 +15,12 @@ public class Sudoku {
 
     public void readFile(String file) {
         try {
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
-
-            int row = 0;
-            String line;
-            while ((line = br.readLine()) != null) {
-
-                line = line.trim();
-                System.out.println(line);
-                System.out.println("this is row: " + row);
-                if (line.isEmpty()) continue;
-                if (row >= BOARD_SIZE) {
-                    throw new InvalidCharacterException("The file has more than " + BOARD_SIZE + " rows.");
-                }
-                String[] parts = line.split(",");
-                for (String part : parts)
-                    System.out.println(
-                            part
-                    );
-                if (parts.length != BOARD_SIZE) {
-                    throw new InvalidCharacterException("Row" + (row + 1) + " must have " + BOARD_SIZE + " numbers.");
-                }
-                for (int col = 0; col < BOARD_SIZE; col++) {
-                    try {
-                        int number = Integer.parseInt(parts[col].trim());
-                        board[row][col] = new SudokuCell(number);
-                    } catch (NumberFormatException e) {
-                        throw new InvalidCharacterException("Invalid character '" + parts[col].trim() + "' at row " + (row + 1) + ", column " + (col + 1) + ".");
-                    }
-
-                }
-                row++;
-            }
-            if (row != BOARD_SIZE) {
-                throw new InvalidCharacterException("The file must have " + BOARD_SIZE + " rows, but has " + row + ".");
-            }
-            System.out.println();
-            br.close();
-
-        } catch (FileNotFoundException e) {
+            InputStream in = new FileInputStream(file);
+            readFromStream(in);
+        } catch (FileNotFoundException ex){
             throw new SudokuFileNotFoundException("The file " + file + " was not found.");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException ex){
+            throw new RuntimeException(ex);
         }
     }
 
@@ -140,6 +102,52 @@ public class Sudoku {
             br.close();
         }catch (IOException ex){
             throw new RuntimeException(ex);
+        }
+    }
+
+    public void readFromStream(InputStream in){
+        try {
+            InputStreamReader inr = new InputStreamReader(in);
+            BufferedReader br = new BufferedReader(inr);
+
+            int row = 0;
+            String line;
+            while ((line = br.readLine()) != null) {
+
+                line = line.trim();
+                System.out.println(line);
+                System.out.println("this is row: " + row);
+                if (line.isEmpty()) continue;
+                if (row >= BOARD_SIZE) {
+                    throw new InvalidCharacterException("The file has more than " + BOARD_SIZE + " rows.");
+                }
+                String[] parts = line.split(",");
+                for (String part : parts)
+                    System.out.println(
+                            part
+                    );
+                if (parts.length != BOARD_SIZE) {
+                    throw new InvalidCharacterException("Row" + (row + 1) + " must have " + BOARD_SIZE + " numbers.");
+                }
+                for (int col = 0; col < BOARD_SIZE; col++) {
+                    try {
+                        int number = Integer.parseInt(parts[col].trim());
+                        board[row][col] = new SudokuCell(number);
+                    } catch (NumberFormatException e) {
+                        throw new InvalidCharacterException("Invalid character '" + parts[col].trim() + "' at row " + (row + 1) + ", column " + (col + 1) + ".");
+                    }
+
+                }
+                row++;
+            }
+            if (row != BOARD_SIZE) {
+                throw new InvalidCharacterException("The file must have " + BOARD_SIZE + " rows, but has " + row + ".");
+            }
+            System.out.println();
+            br.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
