@@ -63,20 +63,7 @@ public class Sudoku {
     }
 
     public void printPuzzle(){
-        String line = "+-------+-------+-------+";
-        for(int row =0; row<BOARD_SIZE; row++){
-            if(row % BOX_SIZE == 0) System.out.println(line);
-            System.out.print("| ");
-
-            for (int col=0; col<BOARD_SIZE; col++){
-                System.out.print(board[row][col] + " ");
-                if((col + 1) % BOX_SIZE == 0)
-                    System.out.print("| ");
-            }
-            System.out.println();
-//            if((row +1) % BOX_SIZE==0 && row <BOARD_SIZE-1) System.out.println("+-------+-------+-------+");
-        }
-        System.out.print(line);
+        System.out.println(boardToString());
     }
 
     public boolean isNumInRow(int row, int num){
@@ -122,5 +109,37 @@ public class Sudoku {
 
     public SudokuCell  getCell(int row, int col){
         return board[row][col];
+    }
+
+    public String boardToString(){
+        StringBuilder sb = new StringBuilder();
+
+        String line = "+-------+-------+-------+";
+        for(int row =0; row<BOARD_SIZE; row++){
+            if(row % BOX_SIZE == 0) sb.append(line).append("\n");
+            sb.append("| ");
+
+            for (int col=0; col<BOARD_SIZE; col++){
+                sb.append(board[row][col] + " ");
+                if((col + 1) % BOX_SIZE == 0)
+                    sb.append("| ");
+            }
+            sb.append("\n");
+        }
+        sb.append(line).append("\n");
+        return sb.toString();
+    }
+
+    public void printInFile(String fileName) throws IOException {
+        try {
+            FileWriter fw = new FileWriter(fileName + ".solution" + ".txt");
+            BufferedWriter br = new BufferedWriter(fw);
+
+            br.write(boardToString());
+
+            br.close();
+        }catch (IOException ex){
+            throw new RuntimeException(ex);
+        }
     }
 }
