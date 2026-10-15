@@ -2,8 +2,10 @@ package com.ga.sudoku;
 
 import com.ga.sudoku.exceptions.InvalidCharacterException;
 import com.ga.sudoku.exceptions.SudokuFileNotFoundException;
+import org.springframework.security.core.parameters.P;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 
 public class Sudoku {
@@ -74,5 +76,40 @@ public class Sudoku {
             System.out.println();
 //            if((row +1) % BOX_SIZE==0 && row <BOARD_SIZE-1) System.out.println("+-------+-------+-------+");
         }
+        System.out.print(line);
+    }
+
+    public boolean isNumInRow(int row, int num){
+       for (int col =0; col<BOARD_SIZE; col++){
+           if(board[row][col].getNumber() == num){
+               return true;
+           }
+       }
+       return false;
+    }
+
+    public boolean isNumInCol(int col, int num){
+        for(int row=0; row<BOARD_SIZE; row++){
+            if(board[row][col].getNumber() == num){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isNumInBox(int row, int col, int num){
+        int startRow = row - row % BOX_SIZE;
+        int startCol = col - col % BOX_SIZE;
+        for(int i =0; i< BOX_SIZE; i++){
+            for(int n = 0; n <BOX_SIZE; n++){
+                System.out.print(board[startRow + i][startCol +n]);
+                if(board[startRow + i][startCol +n].getNumber() == num) return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean canPlace(int row, int col, int num){
+        return !(isNumInRow(row, num) && isNumInCol(col, num) && isNumInBox(row, col, num));
     }
 }

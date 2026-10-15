@@ -10,6 +10,9 @@ public class SodukoApplication {
 		Sudoku sudoku = new Sudoku();
 		sudoku.readFile("puzzle1.txt");
 		sudoku.printPuzzle();
+		System.out.println();
+		System.out.println(sudoku.isNumInRow(0,5));
+		sudoku.isNumInBox(7,4 ,2);
 	}
 
 }
